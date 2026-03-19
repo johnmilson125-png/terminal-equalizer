@@ -35,9 +35,15 @@ float AudioEngine::GenVolLevel() { return Get().InternalGenVol(); }
 // Cleanup
 AudioEngine::~AudioEngine()
 {
+    // general volume
     pEndpointVolume->Release();
     pDevice->Release();
     pEnumerator->Release();
+
+    // audio samples
+    if (pAudioCaptureClient) pAudioCaptureClient->Release();
+    if (pAudioClient) pAudioClient->Release();
+
     CoUninitialize();
 }
 
@@ -49,4 +55,9 @@ float AudioEngine::InternalGenVol()
     pEndpointVolume->GetChannelVolumeLevelScalar(0, &vol);
 
     return vol;
+}
+
+void AudioEngine::DisplayMaster() 
+{
+    // display each float in buffer
 }
