@@ -1,23 +1,39 @@
 #include "../inc/audio/engine.hpp"
+#include <iostream>
 
 // Initialize object
 AudioEngine::AudioEngine() 
 { 
+    HRESULT hr;
     CoInitialize(NULL);
 
     // Get the default audio endpoint
-    CoCreateInstance(__uuidof(MMDeviceEnumerator), NULL, CLSCTX_ALL, __uuidof(IMMDeviceEnumerator), (void**)&pEnumerator);
-    pEnumerator->GetDefaultAudioEndpoint(eRender, eConsole, &pDevice);
+    hr = CoCreateInstance(__uuidof(MMDeviceEnumerator), NULL, CLSCTX_ALL, __uuidof(IMMDeviceEnumerator), (void**)&pEnumerator);
+    hr = pEnumerator->GetDefaultAudioEndpoint(eRender, eConsole, &pDevice);
 
-    // Activate volume interface
-    pDevice->Activate(__uuidof(IAudioEndpointVolume), CLSCTX_ALL, NULL, (void**)&pEndpointVolume);
+    // Activate general volume interface
+    hr = pDevice->Activate(__uuidof(IAudioEndpointVolume), CLSCTX_ALL, NULL, (void**)&pEndpointVolume);
 
-    
+    // Activate sample/buffer interface
+    hr = pDevice->Activate(__uuidof(IAudioClient), CLSCTX_ALL, NULL, (void**)&pAudioClient);
+
+    // Mix Format = How client captures
+    hr = pAudioClient->GetMixFormat(&pWAVEFORMATEX);
+
+    //initialize for loopback
+    hr = pAudioClient->Initialize(AUDCLNT_SHAREMODE_SHARED, AUDCLNT_STREAMFLAGS_LOOPBACK, 10000000, 0, pWAVEFORMATEX, NULL);
+
+    // get capture service
+    hr = pAudioClient->GetService(__uuidof(IAudioCaptureClient), (void**)&pAudioCaptureClient);
+
+    // start audio client
+    hr = pAudioClient->Start();
+
     // Count of channels in audio stream that enter/leave audio enpoint
     UINT ChannelCount = 0;
 
     // https://learn.microsoft.com/en-us/windows/win32/api/endpointvolume/nf-endpointvolume-iaudioendpointvolume-getchannelcount
-    pEndpointVolume->GetChannelCount(&ChannelCount);
+    hr = pEndpointVolume->GetChannelCount(&ChannelCount);
 
     // https://learn.microsoft.com/en-us/windows/win32/api/endpointvolume/nf-endpointvolume-iaudioendpointvolume-getchannelcount
     HRESULT result = pEndpointVolume->GetChannelCount(&ChannelCount);
@@ -77,7 +93,10 @@ std::vector<float> AudioEngine::InternalBuffer()
     HRESULT hr = pAudioCaptureClient->GetNextPacketSize(&packetLength);
 
     // clear previous data
-    buffer.clear();
+    if(packetLength != 0) {
+        std::cout << "Caught packet of size: " << packetLength << "\n";
+        buffer.clear();
+    }
 
     while(packetLength != 0)
     {

@@ -18,6 +18,7 @@ void RenderEqualizer::Display() {
 
 void RenderEqualizer::DisplayBuffer() {
     std::vector<float> CurrentBuffer =  AudioEngine::Get().GetCurrentBuffer(); 
+    std::cout << CurrentBuffer.size();
 
     for(int i = 0; i < CurrentBuffer.size(); ++i) {
         std::cout << i << ". " << CurrentBuffer[i] << "\n";

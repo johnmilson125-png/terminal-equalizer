@@ -11,7 +11,8 @@ namespace utils { size_t ALIGNMENT = 32; }
 int main() {
     
     RenderEqualizer o;
-    o.Display();
+    // o.Display();
+    o.DisplayBuffer();
 
     return 0;
 }
