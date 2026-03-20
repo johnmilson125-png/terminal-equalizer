@@ -15,3 +15,12 @@ void RenderEqualizer::Display() {
         else std::cout << "\r" << levels[level] << "          " << std::flush;
     }
 }
+
+void RenderEqualizer::DisplayBuffer() {
+    std::vector<float> CurrentBuffer =  AudioEngine::Get().GetCurrentBuffer(); 
+
+    for(int i = 0; i < CurrentBuffer.size(); ++i) {
+        std::cout << i << ". " << CurrentBuffer[i] << "\n";
+    }
+
+}

@@ -26,6 +26,7 @@ Copy-Item .\third_party\lib\libfftw3-3.dll -Destination .\output\
 **readings:** <br>
 https://learn.microsoft.com/en-us/windows/win32/api/endpointvolume/nn-endpointvolume-iaudioendpointvolume <br>
 https://en.wikipedia.org/wiki/Fast_Fourier_transform <br>
+[4] https://learn.microsoft.com/en-us/windows/win32/api/audioclient/nf-audioclient-iaudioclient-initialize
 
 **libraries used**: <br>
 https://fftwpp.sourceforge.net/, 

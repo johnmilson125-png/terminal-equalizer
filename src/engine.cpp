@@ -30,7 +30,15 @@ AudioEngine& AudioEngine::Get()
     return instance;
 }
 
-float AudioEngine::GenVolLevel() { return Get().InternalGenVol(); }
+float AudioEngine::GenVolLevel() 
+{ 
+    return Get().InternalGenVol();
+}
+
+std::vector<float> AudioEngine::GetCurrentBuffer()
+{
+    return Get().InternalBuffer();
+}
 
 // Cleanup
 AudioEngine::~AudioEngine()
@@ -43,6 +51,11 @@ AudioEngine::~AudioEngine()
     // audio samples
     if (pAudioCaptureClient) pAudioCaptureClient->Release();
     if (pAudioClient) pAudioClient->Release();
+
+    // free COM-allocated memory (windows allocates it manually)
+    if (pWAVEFORMATEX) {
+        CoTaskMemFree(pWAVEFORMATEX); // [4]
+    }
 
     CoUninitialize();
 }

@@ -18,6 +18,8 @@ public:
 
     float GenVolLevel();
 
+    std::vector<float> GetCurrentBuffer();
+
     // todo: get audio which is passable via an array of floats/doubles
     float FloatVolume();
 
@@ -35,10 +37,13 @@ private:
     // Initialize member variables (audio samples)
     IAudioClient* pAudioClient = nullptr; // manage audio client
     IAudioCaptureClient* pAudioCaptureClient = nullptr; // capture buffer
-    WAVEFORMATEX* pWAVEFORMATEX = nullptr; // https://learn.microsoft.com/en-us/windows/win32/api/audioclient/nf-audioclient-iaudioclient-initialize
+    WAVEFORMATEX* pWAVEFORMATEX = nullptr; // [4]
 
-    // temp
+    // temp retreival functions 
     float InternalGenVol();
+    std::vector<float> InternalBuffer();
+
+    // temp visualizer functions
     void DisplayMaster(); // display all audio samples
 
     std::vector<float> buffer;
