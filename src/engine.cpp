@@ -70,6 +70,45 @@ float AudioEngine::InternalGenVol()
     return vol;
 }
 
+// capture loop
+std::vector<float> AudioEngine::InternalBuffer()
+{
+    UINT32 packetLength = 0;
+    HRESULT hr = pAudioCaptureClient->GetNextPacketSize(&packetLength);
+
+    // clear previous data
+    buffer.clear();
+
+    while(packetLength != 0)
+    {
+        BYTE* pData;
+        UINT32 availableFrames;
+        DWORD flags;
+
+        // lock windows audio buffer
+        hr = pAudioCaptureClient->GetBuffer(&pData, &availableFrames, &flags, NULL, NULL);
+
+        // cast raw bytes into floats
+        float* fData = (float*)pData;
+
+        for(UINT32 i = 0; i < availableFrames; ++i)
+        {
+            // *2 for left and right values of stereo :) ([left][right])
+            float left = fData[i * 2];
+            float right = fData[i * 2 + 1];
+            buffer.push_back((left + right) / 2.0f);
+        }
+
+        // release lock
+        hr = pAudioCaptureClient->ReleaseBuffer(availableFrames);
+
+        // check if there is another packet waiting
+        hr = pAudioCaptureClient->GetNextPacketSize(&packetLength);
+    }
+
+    return buffer;
+}
+
 void AudioEngine::DisplayMaster() 
 {
     // display each float in buffer
