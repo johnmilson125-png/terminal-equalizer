@@ -96,7 +96,6 @@ std::vector<float> AudioEngine::InternalBuffer()
 
     // clear previous data
     if(packetLength != 0) {
-        std::cout << "Caught packet of size: " << packetLength << "\n";
         buffer.clear();
     }
 

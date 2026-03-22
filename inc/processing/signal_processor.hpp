@@ -9,10 +9,10 @@ public:
     SignalProcessor();
     void Accumulate();
     std::vector<float> GetFFTBuffer();
+    bool isFull();
 
 private:
     std::vector<float> samples;
-    bool isFull();
 
 };
 

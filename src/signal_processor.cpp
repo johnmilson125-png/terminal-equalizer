@@ -8,18 +8,27 @@ SignalProcessor::SignalProcessor()
 
 void SignalProcessor::Accumulate()
 {
-    std::vector<float> currentAudio = AudioEngine::Get().GetCurrentBuffer();
+    auto currentAudio = AudioEngine::Get().GetCurrentBuffer();
 
-    if(isFull()) {
-        samples.clear();
-    } else {
-        samples.insert(samples.end(), currentAudio.begin(), currentAudio.end());
-    }
+    if(currentAudio.size() == 0) return;
+    
+    samples.insert(samples.end(), currentAudio.begin(), currentAudio.end());    
 }
 
+// if the vector somehow contains more than 2400 items don't remove them
 std::vector<float> SignalProcessor::GetFFTBuffer()
 {   
-    return samples;
+    std::vector<float> FFTBuffer;
+
+    if(isFull()) {
+        // assign 0 - 2400
+        FFTBuffer.assign(samples.begin(), samples.begin() + 2400);
+
+        // remove only the values added to FFTBuffer
+        samples.erase(samples.begin(), samples.begin() + 2400);
+    }
+
+    return FFTBuffer;
 }
 
 bool SignalProcessor::isFull()
