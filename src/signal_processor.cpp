@@ -8,10 +8,12 @@ SignalProcessor::SignalProcessor()
 
 void SignalProcessor::Accumulate()
 {
-    if(isFull) {
+    std::vector<float> currentAudio = AudioEngine::Get().GetCurrentBuffer();
+
+    if(isFull()) {
         samples.clear();
     } else {
-        samples.insert(samples.end(), AudioEngine::Get().GetCurrentBuffer().begin(), AudioEngine::Get().GetCurrentBuffer().end());
+        samples.insert(samples.end(), currentAudio.begin(), currentAudio.end());
     }
 }
 
