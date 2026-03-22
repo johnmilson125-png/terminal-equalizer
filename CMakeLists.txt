@@ -9,6 +9,7 @@ add_executable(terminal-equalizer
     src/main.cpp 
     src/engine.cpp 
     src/visualizer.cpp 
+    src/signal_processor.cpp 
     third_party/src/fftw++.cc
 )
 
