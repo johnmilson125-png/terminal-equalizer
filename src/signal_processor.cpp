@@ -16,13 +16,13 @@ void SignalProcessor::Accumulate()
 }
 
 // if the vector somehow contains more than 2400 items don't remove them
-std::vector<float> SignalProcessor::GetFFTBuffer()
+std::array<double, 2400> SignalProcessor::GetFFTBuffer()
 {   
-    std::vector<float> FFTBuffer;
+    std::array<double, 2400> FFTBuffer;
 
     if(isFull()) {
         // assign 0 - 2400
-        FFTBuffer.assign(samples.begin(), samples.begin() + 2400);
+        std::copy(samples.begin(), samples.begin() + 2400, FFTBuffer);
 
         // remove only the values added to FFTBuffer
         samples.erase(samples.begin(), samples.begin() + 2400);
