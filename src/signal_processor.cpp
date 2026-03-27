@@ -8,7 +8,7 @@ SignalProcessor::SignalProcessor()
 
 void SignalProcessor::Accumulate()
 {
-    auto currentAudio = AudioEngine::Get().GetCurrentBuffer();
+    std::vector<double> currentAudio = AudioEngine::Get().GetCurrentBuffer();
 
     if(currentAudio.size() == 0) return;
     
@@ -22,7 +22,7 @@ std::array<double, 2400> SignalProcessor::GetFFTBuffer()
 
     if(isFull()) {
         // assign 0 - 2400
-        std::copy(samples.begin(), samples.begin() + 2400, FFTBuffer);
+        std::copy(samples.begin(), samples.begin() + 2400, FFTBuffer.begin());
 
         // remove only the values added to FFTBuffer
         samples.erase(samples.begin(), samples.begin() + 2400);
