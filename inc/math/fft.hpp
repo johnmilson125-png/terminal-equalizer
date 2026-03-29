@@ -1,5 +1,4 @@
-#ifndef FFT_HPP
-#define FFT_HPP
+#pragma once
 
 #include <complex>
 #include "Complex.h"
@@ -8,8 +7,8 @@
 
 #include "Array.h"
 #include "fftw++.h"
+#include "signal_processor.hpp"
 
-#include <vector>
 #include <cmath>
 #include <algorithm>
 
@@ -18,7 +17,9 @@
 #endif
 
 // namespaces
+using namespace utils;
 using namespace fftwpp;
 using namespace Array; 
+using namespace parallel;
 
-#endif
+void FFT() {}
