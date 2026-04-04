@@ -1,39 +1,45 @@
 #include "../inc/math/fft.hpp"
+#include <cmath>
 
 FFTEngine::FFTEngine()
 {
     n = 2400; // input sample (real)
     np = n / 2 + 1; // retursning sample size (real + complex)
-    align = sizeof(Complex);
 
-    f.Allocate(n, align);
-    F.Allocate(np, align);
+    f = fftw_alloc_real(n);
+    F = fftw_alloc_complex(np);
 
     // build plan once 
-    ForwardPlan = new fftwpp::rcfft1d(n, f, F);
+    ForwardPlan = fftw_plan_dft_r2c_1d(n, f, F, FFTW_ESTIMATE);
 }
 
 FFTEngine::~FFTEngine()
 {
-    delete ForwardPlan;
+    fftw_destroy_plan(ForwardPlan);
+    fftw_free(f);
+    fftw_free(F);
 }
 
 std::vector<double> FFTEngine::Run(std::array<double, 2400>& audioBuffer)
 {
     std::vector<double> magnitudes;
 
-    for(size_t i = 0; i < audioBuffer.size(); ++i)
+    for (size_t i = 0; i < audioBuffer.size(); ++i)
     {
         f[i] = audioBuffer[i];
     }
 
     // perform fft
-    ForwardPlan->fft(f, F);
+    fftw_execute(ForwardPlan);
 
     magnitudes.reserve(1201);
-    for(size_t i = 0; i < F.Size(); ++i)
+
+    for (int i = 0; i < np; ++i)
     {
-        magnitudes.push_back(std::abs(F[i]));
+        double real = F[i][0];
+        double imag = F[i][1];
+
+        magnitudes.push_back(std::sqrt(real * real + imag * imag));
     }
 
     return magnitudes;
