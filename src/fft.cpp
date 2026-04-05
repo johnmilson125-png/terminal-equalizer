@@ -51,10 +51,16 @@ std::vector<double> FFTEngine::Run(std::array<double, 2400>& audioBuffer)
         double real = F[i][0];
         double imag = F[i][1];
 
-        // normalize
         double raw = std::sqrt(real * real + imag * imag);
 
-        magnitudes.push_back(raw);
+        double normalized = raw / (n / 2.0);
+
+        double dB = 20.0 * std::log10(normalized + 1e-12);
+
+        // from testing, silence is -240
+        double dB_shift = dB + 240.0;
+
+        magnitudes.push_back(dB_shift);
     }
 
     return magnitudes;

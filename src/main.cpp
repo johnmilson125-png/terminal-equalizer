@@ -61,7 +61,7 @@ int main() {
 
             std::cout << magnitudes.size() << "\n";
 
-            for (size_t i = 0; i < magnitudes.size(); ++i)
+            for (int16_t i = 0; i < magnitudes.size(); ++i)
             {
                 std::cout << i << ". " << magnitudes[i] << "\n";
             }
