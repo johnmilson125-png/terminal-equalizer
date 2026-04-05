@@ -1,24 +1,28 @@
-#ifndef FFT_HPP
-#define FFT_HPP
+#pragma once
 
-#include <complex>
-#include "Complex.h"
-#undef I
-#undef O
+#include "../processing/signal_processor.hpp"
+#include "fftw3.h"
 
-#include "Array.h"
-#include "fftw++.h"
-
-#include <vector>
-#include <cmath>
-#include <algorithm>
-
-#ifndef M_PI
-#define M_PI 3.14159265358979323846
-#endif
-
+/*
 // namespaces
+using namespace utils;
 using namespace fftwpp;
 using namespace Array; 
+using namespace parallel;
+*/
 
-#endif
+class FFTEngine {
+private:
+    int n;
+    int np; 
+
+    double *f;
+    fftw_complex *F;
+    fftw_plan ForwardPlan;
+
+public:
+    FFTEngine();
+    ~FFTEngine();
+
+    std::vector<double> Run(std::array<double, 2400>& audioBuffer);
+};

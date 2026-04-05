@@ -3,6 +3,7 @@
 .vscode
 \executables
 /third_party/*
+/build
 !/third_party/inc
 !/third_party/lib
 !/third_party/src

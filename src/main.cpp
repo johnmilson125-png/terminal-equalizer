@@ -1,8 +1,4 @@
-#include <iostream>
-#include <cstddef>
-#include "fftw++.h"
-#include "../inc/ui/visualizer.hpp"
-#include "../inc/processing/signal_processor.hpp"
+#include "../inc/main.h"
 
 // FFTW++ global variables
 namespace parallel { void Threshold(size_t threads) {} }
@@ -13,15 +9,64 @@ int main() {
     
     RenderEqualizer o;
     SignalProcessor s;
+    FFTEngine f;
     // o.Display();
+
+    /* signal_processor test
+    // Get a single buffer, and loop through each index
+    for(UINT32 i = 0; i < 5; i++) {
+
+         NOTE:
+        * this 'Accumulate()' function may need to
+        * be called multiple times before 'GetFFTBuffer()'
+        * is called, since each packet has a size of 480
+        * and we are Accumulating a singular packet upon
+        * each call of the function
+        
+        s.Accumulate();
+    }
+    auto buff = s.GetFFTBuffer();
+    std::cout << "Size of buffer: " <<  buff.size() << "\n";
+    for(auto i : buff) {
+        std::cout << i << "\n";
+    }
+
+    std::this_thread::sleep_for(std::chrono::milliseconds(2000));
+    */
+
+    /* signal_processor test
     while(true) {
         // o.DisplayBuffer();
         s.Accumulate();
 
         if(s.isFull()) {
-            auto buff = s.GetFFTBuffer();
+            buff = s.GetFFTBuffer();
             std::cout << "Size of buffer: " << buff.size() << "\n";
         }
+    }
+    */
+
+    // FFT Test
+    while(1) 
+    {
+        s.Accumulate();
+
+        // 2400
+        if(s.isFull())
+        {
+            std::cout << "full" << "\n";
+
+            auto pass  = s.GetFFTBuffer();
+            auto magnitudes  = f.Run(pass);
+
+            std::cout << magnitudes.size() << "\n";
+
+            for (int16_t i = 0; i < magnitudes.size(); ++i)
+            {
+                std::cout << i << ". " << magnitudes[i] << "\n";
+            }
+        }
+
     }
 
     return 0;
