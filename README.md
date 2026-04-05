@@ -4,6 +4,7 @@ pet project written in C++17, using the MinGW compiler (GCC version 15.2.0)
 * `main.cpp`: the entry point of the application. Initializes and calls audio engine and visualizer. <br>
 * `engine.cpp`: the data pipline. Responsible for capturing the audio levels and samples for the visualizer. <br>
 * `signal_processor.cpp`: the FIFO queue that is responsible for processing the audio samples for FFT. <br>
+* `fft.cpp`: responsible for performing all the math, including fast fourier transforms and decibel conversions. <br>
 * `visualizer.cpp`: to display the audio levels in a graphical way (spectral visualizer). <br>
 
 ## prereqs
