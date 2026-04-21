@@ -5,15 +5,20 @@
 
 #include <vector>
 #include <string>
+#include <thread>
+#include <chrono>
 
 class RenderEqualizer {
 public:
     void Display(); // general volume level
     void DisplayBuffer(); // print float values of buffer
-    void EnableVisualizer(); 
+
+    void EnableVisualizer(std::vector<double> freq);
 
 private:
-    int x = 0;
+    CONSOLE_SCREEN_BUFFER_INFO csbi;        
+    int termWidth;
+    int termHeight;
 
     std::vector<std::string> levels = 
     {   "#", 

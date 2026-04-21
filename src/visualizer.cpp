@@ -30,3 +30,26 @@ void RenderEqualizer::DisplayBuffer() {
     }
 
 }
+
+void RenderEqualizer::EnableVisualizer(std::vector<double> freq) 
+{
+    GetConsoleScreenBufferInfo(GetStdHandle(STD_OUTPUT_HANDLE), &csbi);
+    termWidth  = csbi.srWindow.Right - csbi.srWindow.Left + 1;
+    termHeight = csbi.srWindow.Bottom - csbi.srWindow.Top + 1;
+
+    unsigned short frameCount = 0;
+
+    while (1) {
+
+        if (frameCount % 30 == 0) {
+            GetConsoleScreenBufferInfo(GetStdHandle(STD_OUTPUT_HANDLE), &csbi);
+            termWidth  = csbi.srWindow.Right - csbi.srWindow.Left + 1;
+            termHeight = csbi.srWindow.Bottom - csbi.srWindow.Top + 1;
+        }
+
+        
+        
+        std::this_thread::sleep_for(std::chrono::milliseconds(20));
+    }
+
+}
