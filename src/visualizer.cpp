@@ -56,16 +56,20 @@ void RenderEqualizer::EnableVisualizer(std::vector<double>& freq, std::mutex& ma
 
         {
             std::lock_guard<std::mutex> lock(magMutex);
-            for (int i = 0; i < N_BARS; ++i) {
-                int binLow = (int)(20.0f * pow(20000.f / 20.f, (float)i / N_BARS) * 1201 / (sampleRate / 2.f));
-                int binHigh = (int)(20.0f * pow(20000.f / 20.f, (float)(i+1) / N_BARS) * 1201 / (sampleRate / 2.f));
-                binHigh = std::min(binHigh, 1200);
+            if (freq.empty() || freq.size() < 1201) continue; // safety check
+            
+            for (int i = 0; i < N_BARS; i++) {
+                int binLow  = (int)(20.f * pow(20000.f / 20.f, (float)i / N_BARS)       * 1201 / (sampleRate / 2.f));
+                int binHigh = (int)(20.f * pow(20000.f / 20.f, (float)(i+1) / N_BARS)   * 1201 / (sampleRate / 2.f));
+                
+                binLow  = std::max(0, std::min(binLow, 1200));
+                binHigh = std::max(0, std::min(binHigh, 1200));
                 if (binLow >= binHigh) binHigh = binLow + 1;
-
+                if (binHigh > (int)freq.size()) binHigh = freq.size(); // critical
+                
                 double peak = *std::max_element(freq.begin() + binLow, freq.begin() + binHigh);
                 barValues[i] = (float)((peak + 90.0) / 90.0);
             }
-
         }
 
         frame.clear();
@@ -77,7 +81,8 @@ void RenderEqualizer::EnableVisualizer(std::vector<double>& freq, std::mutex& ma
             frame += '\n';
         }
 
-        std::cout << "\033[H" << frame << std::flush;        
+        std::cout << "render frame " << frameCount << "\n" << std::flush;
+        // std::cout << "\033[H" << frame << std::flush;        
         std::this_thread::sleep_for(std::chrono::milliseconds(20));
     }
 

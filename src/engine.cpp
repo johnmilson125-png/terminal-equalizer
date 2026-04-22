@@ -4,7 +4,6 @@
 AudioEngine::AudioEngine() 
 { 
     HRESULT hr;
-    CoInitialize(NULL);
 
     // Get the default audio endpoint
     hr = CoCreateInstance(__uuidof(MMDeviceEnumerator), NULL, CLSCTX_ALL, __uuidof(IMMDeviceEnumerator), (void**)&pEnumerator);
@@ -74,8 +73,6 @@ AudioEngine::~AudioEngine()
     if (pWAVEFORMATEX) {
         CoTaskMemFree(pWAVEFORMATEX); // [4]
     }
-
-    CoUninitialize();
 }
 
 float AudioEngine::InternalGenVol() 

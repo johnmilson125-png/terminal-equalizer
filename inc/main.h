@@ -7,5 +7,5 @@
 #include "../inc/processing/signal_processor.hpp"
 #include "../inc/math/fft.hpp"
 
-std::mutex magMutex;
-std::vector<double> sharedMagnitudes;
+extern std::mutex magMutex;
+extern std::vector<double> sharedMagnitudes;
