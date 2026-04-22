@@ -58,7 +58,12 @@ void RenderEqualizer::EnableVisualizer(std::vector<double>& freq, std::mutex& ma
             std::lock_guard<std::mutex> lock(magMutex);
             for (int i = 0; i < N_BARS; ++i) {
                 int binLow = (int)(20.0f * pow(20000.f / 20.f, (float)i / N_BARS) * 1201 / (sampleRate / 2.f));
-                int binHigh = (int)(20.0f * pow(20000.f / 20.f, (float)(i+1) / N_BARS) * 1201 / (sampleRate / 2.f))
+                int binHigh = (int)(20.0f * pow(20000.f / 20.f, (float)(i+1) / N_BARS) * 1201 / (sampleRate / 2.f));
+                binHigh = std::min(binHigh, 1200);
+                if (binLow >= binHigh) binHigh = binLow + 1;
+
+                double peak = *std::max_element(freq.begin() + binLow, freq.begin() + binHigh);
+                barValues[i] = (float)((peak + 90.0) / 90.0);
             }
 
         }
@@ -66,8 +71,8 @@ void RenderEqualizer::EnableVisualizer(std::vector<double>& freq, std::mutex& ma
         frame.clear();
         for (int row = termHeight; row > 0; row--) {
             for (int i = 0; i < N_BARS; i++) {
-                int barGheight = (int)(barValues[i] * termHeight);
-                frame += (row <= barHeight) ? '█' : ' ';
+                int barHeight = (int)(barValues[i] * termHeight);
+                frame += (row <= barHeight) ? "█" : " ";
             }
             frame += '\n';
         }

@@ -9,6 +9,7 @@
 #include <mutex>
 #include <cmath>
 #include <chrono>
+#include <algorithm>
 
 class RenderEqualizer {
 public:
@@ -22,8 +23,7 @@ private:
     int termWidth;
     int termHeight;
 
-    constexpr int N_BARS;
-    constexpr int SAMPLE_RATE
+    int N_BARS;
 
     std::vector<std::string> levels = 
     {   "#", 
