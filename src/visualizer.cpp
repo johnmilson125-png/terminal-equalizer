@@ -38,6 +38,9 @@ void RenderEqualizer::EnableVisualizer(std::vector<double> freq)
     termHeight = csbi.srWindow.Bottom - csbi.srWindow.Top + 1;
 
     unsigned short frameCount = 0;
+    std::string frame;
+    frame.reserve(termWidth * termHeight);
+
 
     while (1) {
 
@@ -46,9 +49,19 @@ void RenderEqualizer::EnableVisualizer(std::vector<double> freq)
             termWidth  = csbi.srWindow.Right - csbi.srWindow.Left + 1;
             termHeight = csbi.srWindow.Bottom - csbi.srWindow.Top + 1;
         }
+        frameCount++;
 
-        
-        
+        frame.clear();
+
+        for (int row = termHeight; row > 0; row--) {
+            for (int i = 0; i < N_BARS; i++) {
+                int barGheight = (int)(barValues[i] * termHeight);
+                frame += (row <= barHeight) ? '█' : ' ';
+            }
+            frame += '\n';
+        }
+
+        std::cout << "\033[H" << frame << std::flush;        
         std::this_thread::sleep_for(std::chrono::milliseconds(20));
     }
 
