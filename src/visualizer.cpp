@@ -31,7 +31,7 @@ void RenderEqualizer::DisplayBuffer() {
 
 }
 
-void RenderEqualizer::EnableVisualizer(std::vector<double> freq) 
+void RenderEqualizer::EnableVisualizer(std::vector<double>& freq) 
 {
     GetConsoleScreenBufferInfo(GetStdHandle(STD_OUTPUT_HANDLE), &csbi);
     termWidth  = csbi.srWindow.Right - csbi.srWindow.Left + 1;
