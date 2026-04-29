@@ -1,3 +1,5 @@
+#pragma once
+
 /*
     Terminal Equalizer - A real-time command line audio visualizer
     Copyright (C) 2026 Majock Bim
