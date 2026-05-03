@@ -17,9 +17,6 @@
 */
 
 #include "../inc/ui/visualizer.hpp"
-#include <iostream>
-#include <algorithm>
-#include <cmath>
 
 void RenderEqualizer::Display() {
     int level;
@@ -139,14 +136,23 @@ void RenderEqualizer::EnableVisualizer(std::vector<double>& freq, std::mutex& ma
         int renderHeight = termHeight - 1;
         if (renderHeight < 1) renderHeight = 1;
 
+        float rowA = 0;
+        float rowB = 0;
+        float rowC = 0;
         for (int row = renderHeight; row > 0; row--) {
             for (int i = 0; i < N_BARS; i++) {
                 int barHeight = (int)(barValues[i] * renderHeight);
 
                 if (row <= barHeight) {
-                    frame += "██";
+                    char tempArray[256];
+                    unsigned char color8Bit[3] = {(unsigned char)(255 * rowA), (unsigned char)(255 * rowB), (unsigned char)(255 * rowC)};
+                    sprintf_s(tempArray, sizeof(tempArray), "\033[38;2;%d;%d;%dm:=\033[0m", color8Bit[0], color8Bit[1], color8Bit[2]);
+                    frame += tempArray;
                 } else {
-                    frame += "  ";
+                    frame += "\033[38;2;37;37;37m:=\033[0m";
+                    rowA = float(row) / float(renderHeight);
+                    rowB = -rowA + 1.0f;
+                    rowC = -fabs(rowA - 0.5f);
                 }
             }
             if (row > 1) frame += '\n'; 
