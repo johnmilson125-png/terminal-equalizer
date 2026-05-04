@@ -7,13 +7,13 @@
   
   <!-- Badges -->
   <a href="https://github.com/majockbim/spectrum/stargazers">
-    <img src="https://img.shields.io/github/stars/majockbim/spectrum?style=flat&logo=github&color=4287f5" alt="Stars" />
+    <img src="https://img.shields.io/github/stars/majockbim/spectrum?style=flat&logo=github&color=red" alt="Stars" />
   </a>
   <img src="https://img.shields.io/badge/C%2B%2B17-%2300599C.svg?style=flat&logo=c%2B%2B&logoColor=white" alt="C++17" />
   <img src="https://img.shields.io/badge/Windows-0078D6?style=flat&logo=windows&logoColor=white" alt="Windows" />
   <img src="https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat" alt="PRs Welcome" />
   <a href="https://github.com/majockbim/spectrum/blob/main/LICENSE">
-    <img src="https://img.shields.io/github/license/majockbim/spectrum?style=flat&color=yellow" alt="License" />
+    <img src="https://img.shields.io/github/license/majockbim/spectrum?style=flat&color=purple" alt="License" />
   </a>
 
   <br>
