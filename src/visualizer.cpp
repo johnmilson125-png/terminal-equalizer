@@ -22,8 +22,8 @@
 
 void RenderEqualizer::Display() {
     int level;
-    float temp;
-    float vol;
+    double temp;
+    double vol;
     while(AudioEngine::Get().IsRunning()) {
         vol = AudioEngine::Get().GenVolLevel();
         temp = vol * 9.0;

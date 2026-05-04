@@ -42,11 +42,11 @@ std::vector<double> FFTEngine::Run(std::array<double, 2400>& audioBuffer)
 {
     std::vector<double> magnitudes;
 
-    for (size_t i = 0; i < n; ++i)
+    for (int i = 0; i < n; ++i)
     {
         double sample = 0.0;
 
-        if(i < audioBuffer.size())
+        if(i < (int)audioBuffer.size())
         {
             sample = static_cast<double>(audioBuffer[i]);
 

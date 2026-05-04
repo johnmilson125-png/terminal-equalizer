@@ -23,6 +23,7 @@
 std::atomic<bool> keepRunning(true);
 
 void signalHandler(int signum) {
+    (void)signum;
     keepRunning = false;
     AudioEngine::Get().Stop();
 }

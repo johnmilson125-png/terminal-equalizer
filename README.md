@@ -75,28 +75,60 @@ To make the output visually accurate to human hearing:
 2. **Decibel Conversion:** Raw amplitudes are normalized and converted to a logarithmic $\text{log}_{10}$ scale.
 3. **Frequency Binning:** The pitches are averaged down into a number visual UI bins, depending on the terminal size.
 
+## Quick Start (Casuals)
+For those who just want to run the visualizer without compiling:
+1. Download the latest release (**v1.1.0**) from the [Releases Page](https://github.com/majockbim/spectrum/releases).
+2. Extract the ZIP file to your preferred location.
+3. Run `spectrum.exe`.
+4. Play some music and enjoy the show!
+
 ## Getting Started
 **Prerequisites**
-* **MSYS2 / MinGW-w64**
-* **CMake**
-* **FFTW3** library installed via MSYS2
+* **Windows 10/11**
+* **CMake** (v3.10+)
+* **FFTW3** (Pre-compiled binaries included in `third_party/`)
+* **OpenMP** (Usually included with your compiler)
 
-**Dependencies**
-* **FFTW3** (`libfftw3-3.dll`): Included in `thirdparty/lib/`. 
-  * *Note: The included DLL is pre-compiled for Windows x64. If you are building on a different architecture, you will need to swap this file with the correct binary from the [FFTW website](https://www.fftw.org/).*
-
-## Running It
+## Building from Source (Contributors)
+First, clone the repository:
 ```bash
 git clone https://github.com/majockbim/spectrum
 cd spectrum
+```
 
-# Compile the project
-cmake -S . -B output -G "MinGW Makefiles"
-cmake --build output
+### Option 1: g++ (MinGW-w64)
+Best for those using MSYS2 or a standalone MinGW installation.
+```bash
+# Generate build files
+cmake -B build_mingw -G "MinGW Makefiles"
+
+# Compile
+cmake --build build_mingw
 
 # Run!
-.\output\spectrum.exe
+.\build_mingw\spectrum.exe
 ```
+
+### Option 2: cl (MSVC Command Line)
+Best for those who prefer the Microsoft C++ compiler but want to stay in the terminal. **Note:** Run these commands from an **"x64 Native Tools Command Prompt for VS"**.
+```bash
+# Generate build files (Ensure x64 architecture)
+cmake -S . -B build_msvc -G "Visual Studio 17 2022" -A x64
+
+# Compile
+cmake --build build_msvc --config Release
+
+# Run!!
+.\build_msvc\Release\spectrum.exe
+```
+
+### Option 3: Visual Studio (MSVC IDE)
+The easiest way for Windows developers.
+1. Open Visual Studio.
+2. Select **Open a local folder** and choose the `spectrum` directory.
+3. Visual Studio will automatically detect `CMakeLists.txt` and configure the project.
+4. Select `spectrum.exe` in the "Select Startup Item" dropdown.
+5. Press **F5** to build and run!!!
 
 ## References & Libraries
 
