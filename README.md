@@ -25,7 +25,7 @@
 <br/>
 
 ## System Architecture
-Terminal Equalizer captures raw system audio directly from the soundcard, processes it through a real-time DSP pipeline, and renders it to the console without screen tearing.
+**Spectrum** captures raw system audio directly from the soundcard, processes it through a real-time DSP pipeline, and renders it to the console without screen tearing.
 
 ```mermaid
 %%{init: {'theme': 'base', 'themeVariables': { 'fontFamily': 'Comic Sans MS, Comic Neue, Chalkboard SE, cursive', 'lineColor': '#000000', 'primaryTextColor': '#000000', 'edgeLabelBackground':'#ffffff'}, 'flowchart': {'curve': 'basis'}}}%%
@@ -87,15 +87,15 @@ To make the output visually accurate to human hearing:
 
 ## Running It
 ```bash
-git clone https://github.com/majockbim/terminal-equalizer
-cd terminal-equalizer
+git clone https://github.com/majockbim/spectrum
+cd spectrum
 
 # Compile the project
 cmake -S . -B output -G "MinGW Makefiles"
 cmake --build output
 
 # Run!
-.\output\terminal-equalizer.exe
+.\output\spectrum.exe
 ```
 
 ## References & Libraries
