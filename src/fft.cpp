@@ -1,5 +1,5 @@
 /*
-    Terminal Equalizer - A real-time command line audio visualizer
+    spectrum - A real-time command line audio visualizer
     Copyright (C) 2026 Majock Bim
 
     This program is free software: you can redistribute it and/or modify
@@ -17,7 +17,6 @@
 */
 
 #include "../inc/math/fft.hpp"
-#include <cmath>
 
 FFTEngine::FFTEngine()
 {
@@ -42,11 +41,11 @@ std::vector<double> FFTEngine::Run(std::array<double, 2400>& audioBuffer)
 {
     std::vector<double> magnitudes;
 
-    for (size_t i = 0; i < n; ++i)
+    for (int i = 0; i < n; ++i)
     {
         double sample = 0.0;
 
-        if(i < audioBuffer.size())
+        if(i < (int)audioBuffer.size())
         {
             sample = static_cast<double>(audioBuffer[i]);
 

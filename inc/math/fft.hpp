@@ -1,5 +1,5 @@
 /*
-    Terminal Equalizer - A real-time command line audio visualizer
+    spectru - A real-time command line audio visualizer
     Copyright (C) 2026 Majock Bim
 
     This program is free software: you can redistribute it and/or modify
@@ -16,6 +16,8 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 #pragma once
+
+#include <cmath>
 
 #include "../processing/signal_processor.hpp"
 #include "fftw3.h"

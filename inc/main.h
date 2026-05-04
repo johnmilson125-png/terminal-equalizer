@@ -1,5 +1,5 @@
 /*
-    Terminal Equalizer - A real-time command line audio visualizer
+    spectrum - A real-time command line audio visualizer
     Copyright (C) 2026 Majock Bim
 
     This program is free software: you can redistribute it and/or modify
@@ -17,8 +17,9 @@
 */
 #pragma once
 
-#include <iostream>
 #include <cstddef>
+#include <csignal>
+#include <atomic>
 
 #include "../inc/ui/visualizer.hpp"
 #include "../inc/processing/signal_processor.hpp"
