@@ -17,8 +17,9 @@
 */
 #pragma once
 
-#include <iostream>
 #include <cstddef>
+#include <csignal>
+#include <atomic>
 
 #include "../inc/ui/visualizer.hpp"
 #include "../inc/processing/signal_processor.hpp"

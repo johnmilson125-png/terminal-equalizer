@@ -17,7 +17,6 @@
 */
 
 #include "../inc/math/fft.hpp"
-#include <cmath>
 
 FFTEngine::FFTEngine()
 {

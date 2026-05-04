@@ -17,8 +17,6 @@
 */
 
 #include "../inc/main.h"
-#include <csignal>
-#include <atomic>
 
 std::atomic<bool> keepRunning(true);
 

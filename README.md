@@ -18,11 +18,11 @@
 
   <br>
 
-  <br>
-
-  <img width="1920" alt="spectrum-ezgif com-video-to-gif-converter" src="https://github.com/user-attachments/assets/199c8057-843c-4021-84d8-cbcff293bef8" />
+  <img width="520" alt="spectrum-ezgif com-video-to-gif-converter" src="https://github.com/user-attachments/assets/199c8057-843c-4021-84d8-cbcff293bef8" />
 
 </div>
+
+<br/>
 
 ## System Architecture
 **Spectrum** captures raw system audio directly from the soundcard, processes it through a real-time DSP pipeline, and renders it to the console without screen tearing.
@@ -75,6 +75,16 @@ To make the output visually accurate to human hearing:
 2. **Decibel Conversion:** Raw amplitudes are normalized and converted to a logarithmic $\text{log}_{10}$ scale.
 3. **Frequency Binning:** The pitches are averaged down into a number visual UI bins, depending on the terminal size.
 
+## Performance
+Benchmarked on an AMD Ryzen 5 7520U (2.80 GHz) at a 2400-sample window size:
+
+| Metric | Value |
+|---|---|
+| CPU usage | ~0% |
+| Memory footprint | 0.4 MB |
+
+*spectrum is designed to be lightweight, it should never compete with your music.*
+
 ## Quick Start (Casuals)
 For those who just want to run the visualizer without compiling:
 1. Download the latest release (**v1.1.0**) from the [Releases Page](https://github.com/majockbim/spectrum/releases).
@@ -110,7 +120,8 @@ cmake --build build_mingw
 ```
 
 ### Option 2: cl (MSVC Command Line)
-Best for those who prefer the Microsoft C++ compiler but want to stay in the terminal. **Note:** Run these commands from an **"x64 Native Tools Command Prompt for VS"**.
+Best for those who prefer the Microsoft C++ compiler but want to stay in the terminal.
+**Note**: Because this uses the Visual Studio CMake generator, you can run these commands directly in standard PowerShell. You do not strictly need the specialized "x64 Native Tools Command Prompt."
 ```bash
 # Generate build files (Ensure x64 architecture)
 cmake -S . -B build_msvc -G "Visual Studio 17 2022" -A x64

@@ -17,6 +17,8 @@
 */
 #pragma once
 
+#include <cmath>
+
 #include "../processing/signal_processor.hpp"
 #include "fftw3.h"
 
