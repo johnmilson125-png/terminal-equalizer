@@ -119,8 +119,8 @@ cmake --build build_mingw
 ```
 
 ### Option 2: cl (MSVC Command Line)
-Best for those who prefer the Microsoft C++ compiler but want to stay in the terminal.
-**Note**: Because this uses the Visual Studio CMake generator, you can run these commands directly in standard PowerShell. You do not strictly need the specialized "x64 Native Tools Command Prompt."
+Best for those who prefer the Microsoft C++ compiler but want to stay in the terminal. <br>
+**Note**: Because this uses the Visual Studio CMake generator, you can run these commands directly in standard PowerShell.
 ```bash
 # Generate build files (Ensure x64 architecture)
 cmake -S . -B build_msvc -G "Visual Studio 17 2022" -A x64
