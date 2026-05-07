@@ -17,6 +17,7 @@
 */
 
 #include "../inc/main.h"
+#include <consoleapi3.h>
 #include <csignal>
 #include <atomic>
 #include <thread>
@@ -24,6 +25,7 @@
 #if defined(_MSC_VER) && defined(__clang__)
 #pragma comment(lib, "ole32.lib")
 #pragma comment(lib, "libfftw3-3.lib")
+#pragma comment(lib, "user32.lib")
 #endif
 
 #define AsciiRgb(k, r, g, b) "\033[" #k ";2;" #r ";" #g ";" #b "m"
@@ -37,10 +39,16 @@ void signalHandler(_In_ int signum) {
 
 int __cdecl main(void) {
     SetConsoleOutputCP(CP_UTF8);
-    fprintf(stdout, AsciiRgb(48, 0, 25, 23) AsciiRgb(38, 0, 255, 236) " * ╭─╮╭─╮╭─╴╭─╴╶┬╴╭─╮╷ ╷╭┬╮ * Authors <\033[97mMajockbim \"%s\", Joe.r Dev" AsciiRgb(38, 0, 255, 236) "> \n"
-                    AsciiRgb(48, 0, 18, 25) AsciiRgb(38, 0, 180, 255)  " = ╰─╮├─╯├╴ │   │ ├┬╯│ ││││ = [\033[97mSPECTRUM" AsciiRgb(38, 0, 180, 255) "] Terminal Equalizer - Version 1.2.%08x \n"
-                    AsciiRgb(48, 0, 7, 25) AsciiRgb(38, 0, 73, 255) " * ╰─╯╵  ╰─╴╰─╴ ╵ ╵╰╴╰─╯╵ ╵ * Releases: %s\n", "https://majockbim.com/", 193, "https://github.com/majockbim/spectrum/releases/");
-    fprintf(stdout, AsciiRgb(48, 0, 0, 25) AsciiRgb(38, 0, 0, 255) " * This program was originally created by MajockBim and edited by Joe.r Dev. It is licensed under the MIT License. *\n\033[0m");
+    SetConsoleTitleA("Initializing...");
+
+    HINSTANCE hInstance = GetModuleHandle(NULL);
+    HWND ConsoleWindow = GetConsoleWindow();
+
+    HICON hIcon = LoadIcon(hInstance, MAKEINTRESOURCE(100)); // 100 = icon.ico
+    if (hIcon) {
+        SendMessage(ConsoleWindow, WM_SETICON, ICON_BIG, (LPARAM)hIcon);
+        SendMessage(ConsoleWindow, WM_SETICON, ICON_SMALL, (LPARAM)hIcon);
+    }
     
     // register signal handler for clean exit
     signal(SIGINT, signalHandler);
@@ -71,14 +79,17 @@ int __cdecl main(void) {
     std::thread t2([&]() {
         CoInitialize(NULL);
         int sampleRate = AudioEngine::Get().GetSampleRate();
-        Dev::JoerAndMj::SettingsJsonFileFinder jsonFileFinder;
-        Dev::JoerAndMj::SettingsJsonFileReader jsonFileReader;
+        JsonFileFinder jsonFileFinder;
+        JsonFileReader jsonFileReader;
 
+        SetConsoleTitleA("Choose Theme");
         int findResult = jsonFileFinder.FindJsonFiles(&jsonFileReader);
         if (findResult == 1) {
             std::cout << " * No Json files * " << std::endl;
         }
+        SetConsoleTitleA("...");
         std::this_thread::sleep_for(std::chrono::milliseconds(2000));
+        SetConsoleTitleA("SPECTRUM");
         equalizer.EnableVisualizer(sharedMagnitudes, magMutex, sampleRate, jsonFileReader);
         CoUninitialize();
     });
