@@ -1,6 +1,8 @@
 /*
-    Terminal Equalizer - A real-time command line audio visualizer
-    Copyright (C) 2026 Majock Bim
+    spectrum - A real-time command line audio visualizer
+    Copyright (C) 2026 Majock Bim (@majockbim)
+    Copyright (C) 2026 Joe R. (@johnmilson125-png)
+
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -35,8 +37,8 @@ inline _divide_number_t __cdecl SafeDivide(_In_ _divide_number_t a, _In_ _divide
 
 void RenderEqualizer::Display() {
     int level;
-    float temp;
-    float vol;
+    double temp;
+    double vol;
     while(AudioEngine::Get().IsRunning()) {
         vol = AudioEngine::Get().GenVolLevel();
         temp = vol * 9.0;

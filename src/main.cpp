@@ -1,5 +1,5 @@
 /*
-    Terminal Equalizer - A real-time command line audio visualizer
+    spectrum - A real-time command line audio visualizer
     Copyright (C) 2026 Majock Bim
 
     This program is free software: you can redistribute it and/or modify
@@ -17,6 +17,7 @@
 */
 
 #include "../inc/main.h"
+<<<<<<< main
 #include <consoleapi3.h>
 #include <csignal>
 #include <atomic>
@@ -33,6 +34,13 @@
 std::atomic<bool> keepRunning(true);
 
 void signalHandler(_In_ int signum) {
+=======
+
+std::atomic<bool> keepRunning(true);
+
+void signalHandler(int signum) {
+    (void)signum;
+>>>>>>> main
     keepRunning = false;
     AudioEngine::Get().Stop();
 }

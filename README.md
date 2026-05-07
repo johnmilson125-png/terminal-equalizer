@@ -1,9 +1,30 @@
-Spectral visualizer written in C++17 using the MinGW compiler (GCC version 15.2.0)
 
-<img width="800" height="450" alt="supernova" src="https://github.com/user-attachments/assets/0f85ec79-d0c6-49d9-859b-9d06db516774" />
+<div align="center">
+
+  <img width="520" alt="spectrum - Copy" src="https://github.com/user-attachments/assets/aeecb34f-0132-4a16-acf4-084cd1a19049" />
+  
+  **A real-time, optimized C++ audio visualizer for the Windows console.**
+  
+  <!-- Badges -->
+  <a href="https://github.com/majockbim/spectrum/stargazers">
+    <img src="https://img.shields.io/github/stars/majockbim/spectrum?style=flat&logo=github&color=red" alt="Stars" />
+  </a>
+  <img src="https://img.shields.io/badge/C%2B%2B17-%2300599C.svg?style=flat&logo=c%2B%2B&logoColor=white" alt="C++17" />
+  <img src="https://img.shields.io/badge/Windows-0078D6?style=flat&logo=windows&logoColor=white" alt="Windows" />
+  <img src="https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat" alt="PRs Welcome" />
+  <a href="https://github.com/majockbim/spectrum/blob/main/LICENSE">
+    <img src="https://img.shields.io/github/license/majockbim/spectrum?style=flat&color=purple" alt="License" />
+  </a>
+
+  <br>
+  <br>
+
+  <img width="1920" alt="spectrum-ezgif com-video-to-gif-converter" src="https://github.com/user-attachments/assets/199c8057-843c-4021-84d8-cbcff293bef8" />
+
+</div>
 
 ## System Architecture
-Terminal Equalizer captures raw system audio directly from the soundcard, processes it through a real-time DSP pipeline, and renders it to the console without screen tearing.
+**Spectrum** captures raw system audio directly from the soundcard, processes it through a real-time DSP pipeline, and renders it to the console without screen tearing.
 
 ```mermaid
 %%{init: {'theme': 'base', 'themeVariables': { 'fontFamily': 'Comic Sans MS, Comic Neue, Chalkboard SE, cursive', 'lineColor': '#000000', 'primaryTextColor': '#000000', 'edgeLabelBackground':'#ffffff'}, 'flowchart': {'curve': 'basis'}}}%%
@@ -53,28 +74,71 @@ To make the output visually accurate to human hearing:
 2. **Decibel Conversion:** Raw amplitudes are normalized and converted to a logarithmic $\text{log}_{10}$ scale.
 3. **Frequency Binning:** The pitches are averaged down into a number visual UI bins, depending on the terminal size.
 
+## Performance
+Benchmarked on an AMD Ryzen 5 7520U (2.80 GHz) at a 2400-sample window size:
+
+| Metric | Value |
+|---|---|
+| CPU usage | ~0% |
+| Memory footprint | 0.4 MB |
+
+*spectrum is designed to be lightweight, it should never compete with your music.*
+
+## Quick Start (Casuals)
+For those who just want to run the visualizer without compiling:
+1. Download the latest release (**v1.1.0**) from the [Releases Page](https://github.com/majockbim/spectrum/releases).
+2. Extract the ZIP file to your preferred location.
+3. Run `spectrum.exe`.
+4. Play some music and enjoy the show!
+
 ## Getting Started
 **Prerequisites**
-* **MSYS2 / MinGW-w64**
-* **CMake**
-* **FFTW3** library installed via MSYS2
+* **Windows 10/11**
+* **CMake** (v3.10+)
+* **FFTW3** (Pre-compiled binaries included in `third_party/`)
+* **OpenMP** (Usually included with your compiler)
 
-**Dependencies**
-* **FFTW3** (`libfftw3-3.dll`): Included in `thirdparty/lib/`. 
-  * *Note: The included DLL is pre-compiled for Windows x64. If you are building on a different architecture, you will need to swap this file with the correct binary from the [FFTW website](https://www.fftw.org/).*
-
-## Running It
+## Building from Source (Contributors)
+First, clone the repository:
 ```bash
-git clone https://github.com/majockbim/terminal-equalizer
-cd terminal-equalizer
+git clone https://github.com/majockbim/spectrum
+cd spectrum
+```
 
-# Compile the project
-cmake -S . -B output -G "MinGW Makefiles"
-cmake --build output
+### Option 1: g++ (MinGW-w64)
+Best for those using MSYS2 or a standalone MinGW installation.
+```bash
+# Generate build files
+cmake -B build_mingw -G "MinGW Makefiles"
+
+# Compile
+cmake --build build_mingw
 
 # Run!
-.\output\terminal-equalizer.exe
+.\build_mingw\spectrum.exe
 ```
+
+### Option 2: cl (MSVC Command Line)
+Best for those who prefer the Microsoft C++ compiler but want to stay in the terminal. <br>
+**Note**: Because this uses the Visual Studio CMake generator, you can run these commands directly in standard PowerShell.
+```bash
+# Generate build files (Ensure x64 architecture)
+cmake -S . -B build_msvc -G "Visual Studio 17 2022" -A x64
+
+# Compile
+cmake --build build_msvc --config Release
+
+# Run!!
+.\build_msvc\Release\spectrum.exe
+```
+
+### Option 3: Visual Studio (MSVC IDE)
+The easiest way for Windows developers.
+1. Open Visual Studio.
+2. Select **Open a local folder** and choose the `spectrum` directory.
+3. Visual Studio will automatically detect `CMakeLists.txt` and configure the project.
+4. Select `spectrum.exe` in the "Select Startup Item" dropdown.
+5. Press **F5** to build and run!!!
 
 ## References & Libraries
 
@@ -88,4 +152,6 @@ cmake --build output
 [FFTW (org)](https://www.fftw.org/) <br>
 [FFTW (GitHub)](https://github.com/FFTW/fftw3)
 
-GNU GENERAL PUBLIC LICENSE v3.0 (GPL-3.0)
+## Contributors
+A massive thank you to everyone who has helped build and optimize spectrum. <br>
+Check out [Contributors Hall of Fame](CONTRIBUTORS.md).

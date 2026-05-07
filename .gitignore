@@ -8,3 +8,7 @@
 !/third_party/lib
 !/third_party/src
 !/third_party/ref
+/build_mingw
+/build_msvc
+/build_msvc_test
+/build_vs
