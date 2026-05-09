@@ -17,30 +17,11 @@
 */
 
 #include "../inc/main.h"
-<<<<<<< main
-#include <consoleapi3.h>
-#include <csignal>
-#include <atomic>
-#include <thread>
-
-#if defined(_MSC_VER) && defined(__clang__)
-#pragma comment(lib, "ole32.lib")
-#pragma comment(lib, "libfftw3-3.lib")
-#pragma comment(lib, "user32.lib")
-#endif
-
-#define AsciiRgb(k, r, g, b) "\033[" #k ";2;" #r ";" #g ";" #b "m"
-
-std::atomic<bool> keepRunning(true);
-
-void signalHandler(_In_ int signum) {
-=======
 
 std::atomic<bool> keepRunning(true);
 
 void signalHandler(int signum) {
     (void)signum;
->>>>>>> main
     keepRunning = false;
     AudioEngine::Get().Stop();
 }
