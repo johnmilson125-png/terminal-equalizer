@@ -1,3 +1,0 @@
-C:/Users/pretb/code/terminal-equalizer/build_temp/CMakeFiles/spectrum.dir
-C:/Users/pretb/code/terminal-equalizer/build_temp/CMakeFiles/edit_cache.dir
-C:/Users/pretb/code/terminal-equalizer/build_temp/CMakeFiles/rebuild_cache.dir
