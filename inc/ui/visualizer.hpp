@@ -33,6 +33,7 @@
 #include <time.h>
 #include <stdlib.h>
 #include <conio.h>
+#include <winuser.h>
 
 class RenderEqualizer {
 public:
