@@ -15,11 +15,13 @@
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
+
 #pragma once
 
 #include "../audio/engine.hpp"
-#include "windows.h"
+#include "../inc/settings/settings.hpp"
 
+#include <windows.h>
 #include <vector>
 #include <string>
 #include <thread>
@@ -27,7 +29,10 @@
 #include <cmath>
 #include <chrono>
 #include <algorithm>
-#include "../inc/settings/settings.h"
+#include <iostream>
+#include <time.h>
+#include <stdlib.h>
+#include <conio.h>
 
 class RenderEqualizer {
 public:

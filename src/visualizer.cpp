@@ -19,13 +19,6 @@
 */
 
 #include "../inc/ui/visualizer.hpp"
-#include <iostream>
-#include <algorithm>
-#include <string>
-#include <time.h>
-#include <stdlib.h>
-#include <cmath>
-#include <conio.h>
 
 #define AsciiRgb(k, r, g, b) "\033[" #k ";2;" #r ";" #g ";" #b "m"
 
