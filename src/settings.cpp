@@ -1,29 +1,9 @@
-/*
-    spectrum - A real-time command line audio visualizer
-    Copyright (C) 2026 Joe R. (@johnmilson125-png)
-    Copyright (C) 2026 Majock Bim (@majockbim)
-
-
-    This program is free software: you can redistribute it and/or modify
-    it under the terms of the GNU General Public License as published by
-    the Free Software Foundation, either version 3 of the License, or
-    (at your option) any later version.
-
-    This program is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    GNU General Public License for more details.
-
-    You should have received a copy of the GNU General Public License
-    along with this program.  If not, see <https://www.gnu.org/licenses/>.
-*/
-
-#include "../inc/settings/settings.hpp"
+#include "../inc/settings/settings.h"
 #include <cstdlib>
 #include <processenv.h>
 #include <stdlib.h>
 #include <string>
-#include <winbase.h>
+#include <direct.h>
 
 #define MAX_DATA_SIZE 1024
 
@@ -114,6 +94,7 @@ int __cdecl JsonFileFinder::FindJsonFiles(_In_ JsonFileReader* fileReader) {
             {VT_Boolean, {.booleanValue = false}, nullptr, &oneTheme.useRandomCharacters, "spectrum.tui.useRandomCharacters", "theme.properties"},
             {VT_Character, {.characterValue = '='}, nullptr, &oneTheme.customCharacter, "spectrum.tui.customCharacter", "theme.properties"},
             {VT_String, {.stringValue = "Default Mode"}, nullptr, &oneTheme.themeMode, "spectrum.tui.visualizerMode", "theme.properties"},
+            {VT_Int, {.intValue = 0}, nullptr, &oneTheme.key, "spectrum.tui.key", "theme.properties"},
             {VT_String, {.stringValue = "**Untitled-Theme**"}, nullptr, &oneTheme.themeName, "theme.name", "root"},
             {VT_String, {.stringValue = "**No-ID**"}, nullptr, &oneTheme.themeId, "theme.id", "root"}
         };
@@ -134,6 +115,7 @@ int __cdecl JsonFileFinder::FindJsonFiles(_In_ JsonFileReader* fileReader) {
     size_t index = 0;
     while (index < themes.size()) {
         struct Theme oneTheme = themes.at(index);
+        fprintf(stdout, "%d\n", oneTheme.key);
         struct Option oneOption;
         oneOption.text = std::string(oneTheme.themeName) +  + " (" + oneTheme.themeId + ")";
         oneOption.prefix = "*";
@@ -167,7 +149,7 @@ int __cdecl JsonFileFinder::FindJsonFiles(_In_ JsonFileReader* fileReader) {
     logo = AsciiRgb(48, 0, 25, 23) AsciiRgb(38, 0, 255, 236) " * ╭─╮╭─╮╭─╴╭─╴╶┬╴╭─╮╷ ╷╭┬╮ * Authors <\033[97mMajockbim \"https://majockbim.com/\", Joe.r Dev" AsciiRgb(38, 0, 255, 236) "> \n"
                     AsciiRgb(48, 0, 18, 25) AsciiRgb(38, 0, 180, 255)  " = ╰─╮├─╯├╴ │   │ ├┬╯│ ││││ = [\033[97mSPECTRUM" AsciiRgb(38, 0, 180, 255) "] Terminal Equalizer - Version 1.2.036d9c33 \n"
                     AsciiRgb(48, 0, 7, 25) AsciiRgb(38, 0, 73, 255) " * ╰─╯╵  ╰─╴╰─╴ ╵ ╵╰╴╰─╯╵ ╵ * Releases: https://github.com/majockbim/spectrum/releases/\n";
-    logo += AsciiRgb(48, 0, 0, 25) AsciiRgb(38, 0, 0, 255) " * This program was originally created by MajockBim and edited by Joe.r Dev. It is licensed under the GPL-3.0 License. *\n";
+    logo += AsciiRgb(48, 0, 0, 25) AsciiRgb(38, 0, 0, 255) " * This program was originally created by MajockBim and edited by Joe.r Dev. It is licensed under the MIT License. *\n";
     while (true) {
         GetKeyPressed(&_Char);
         if (_Char == VK_UP) {
@@ -191,6 +173,7 @@ int __cdecl JsonFileFinder::FindJsonFiles(_In_ JsonFileReader* fileReader) {
         std::cout << "Theme Selected: ";
         ShowOption(&options.at(currentTheme)); 
     }
+    fileReader->themes = themes;
     return(0);
 }
 int __cdecl JsonFileReader::ReadSettings(_In_ FilePtr jsonFile, _In_ struct JsonValue* jsonThemeOptions, size_t _Size) {
@@ -241,6 +224,10 @@ int __cdecl JsonFileReader::ReadSettings(_In_ FilePtr jsonFile, _In_ struct Json
 
                 case VT_Boolean: {
                     CopyValue<bool>(jsonThemeOptions[index].defaultValue.booleanValue, yyjson_get_bool(jsonThemeOptions[index].pointer), jsonThemeOptions[index].pointer1);
+                } break;
+
+                case VT_Int: {
+                    CopyValue<int>(jsonThemeOptions[index].defaultValue.intValue, yyjson_get_int(jsonThemeOptions[index].pointer), jsonThemeOptions[index].pointer1);
                 } break;
 
                 case VT_Character: {
