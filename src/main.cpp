@@ -16,17 +16,7 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-#include "../inc/main.h"
-#include <consoleapi3.h>
-#include <csignal>
-#include <atomic>
-#include <thread>
-
-#if defined(_MSC_VER) && defined(__clang__)
-#pragma comment(lib, "ole32.lib")
-#pragma comment(lib, "libfftw3-3.lib")
-#pragma comment(lib, "user32.lib")
-#endif
+#include "../inc/main.hpp"
 
 #define AsciiRgb(k, r, g, b) "\033[" #k ";2;" #r ";" #g ";" #b "m"
 

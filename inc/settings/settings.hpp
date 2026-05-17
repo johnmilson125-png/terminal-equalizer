@@ -16,12 +16,10 @@
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
-#if defined(_MSC_VER) && defined(__clang__)
-#pragma once
-#endif
 
-#ifndef __Settings_H__
-#define __Settings_H__
+#pragma once
+
+#include "../third_party/inc/yyjson.h"
 
 #include <stdio.h>
 #include <vector>
@@ -30,7 +28,11 @@
 #include <string>
 #include <conio.h>
 #include <iostream>
-#include "../third_party/inc/yyjson.h"
+#include <cstdlib>
+#include <processenv.h>
+#include <stdlib.h>
+#include <string>
+#include <direct.h>
 
 #define MAX_THEME_NAME 64
 #define AsciiRgb(k, r, g, b) "\033[" #k ";2;" #r ";" #g ";" #b "m"
@@ -131,5 +133,3 @@ public:
 
     int __cdecl FindJsonFiles(_In_ JsonFileReader* fileReader);
 };
-
-#endif

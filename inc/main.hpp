@@ -21,6 +21,8 @@
 #include <cstddef>
 #include <csignal>
 #include <atomic>
+#include <consoleapi3.h>
+#include <thread>
 
 #include "../inc/ui/visualizer.hpp"
 #include "../inc/processing/signal_processor.hpp"
